@@ -1,5 +1,15 @@
 const colors = {
   //디자인 주요 색상 설정
+  primary1: '#0A0745',
+  primary2: '#4F46E5',
+  primary3: '#ECEBFF',
+  red: '#F23D3D',
+  orange: '#F97316',
+  yellow: '#FBAA00',
+  pink: '#F05196',
+  purple: '#A851F0',
+  green: '#11D874',
+  silber: '#CAD9ED',
   white: '#FFFFFF',
   black: '#000000',
   gray1: '#f7f7f7',

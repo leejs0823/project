@@ -77,10 +77,3 @@ export const Ment = styled.p`
   text-align: center;
   line-height: 20px;
 `;
-
-export const RouteSignup = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-`;

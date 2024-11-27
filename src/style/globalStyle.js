@@ -163,4 +163,10 @@ export const GlobalStyle = createGlobalStyle`
         src: url('/assets/font/Pretendard-ExtraBold.woff') format('woff');
       }
 
+      @font-face {
+        font-family: 'Poppins';
+        font-style: normal;
+        src: url('/assets/font/Poppins-Black.ttf');
+      }
+
 `;
