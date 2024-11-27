@@ -3,6 +3,8 @@ import LoginPage from './pages/login/LoginPage';
 import MainPage from './pages/main/MainPage';
 import SignupPage from './pages/signup/SignupPage';
 import StorePage from './pages/store/StorePage';
+import FriendPage from './pages/friend/FriendPage';
+import CommunityPage from './pages/community/CommunityPage';
 import App from './App';
 
 const router = createBrowserRouter([
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
       {
         path: 'store',
         element: <StorePage />,
+      },
+      {
+        path: 'friend',
+        element: <FriendPage />,
+      },
+      {
+        path: 'community',
+        element: <CommunityPage />,
       },
     ],
   },
