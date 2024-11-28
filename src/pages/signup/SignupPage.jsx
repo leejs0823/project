@@ -14,15 +14,15 @@ function SignupPage() {
   const [nickname, setNickname] = useState();
   const [loginId, setLoginId] = useState();
   const [password, setPassword] = useState();
-  const handleSignup = async () => {
+  const handleSignup = async e => {
+    e.preventDefault(); // 새로고침 방지
     try {
       // 회원가입 API 호출
       const response = await signUpAPI({ loginId, password, nickname });
-
-      // 회원가입 성공 시 메시지 출력
-      console.log('회원가입 성공:', response);
-      // 로그인 페이지로 이동
-      navigate('/login');
+      if (response === 200) {
+        console.log('회원가입 성공:', response);
+        navigate('/login');
+      }
     } catch (error) {
       console.error('회원가입 실패:', error.message);
       alert(error.message); // 실패 시 사용자에게 알림

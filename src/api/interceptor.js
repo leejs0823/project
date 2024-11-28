@@ -10,7 +10,6 @@ export const applyInterceptors = instance => {
       if (accessToken) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
       }
-
       return config;
     },
     error => {

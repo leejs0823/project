@@ -13,7 +13,8 @@ function LoginPage() {
   const navigate = useNavigate();
   const [loginId, setLoginId] = useState();
   const [password, setPassword] = useState();
-  const handleLogin = async (loginId, password) => {
+  const handleLogin = async e => {
+    e.preventDefault(); // 새로고침 방지
     await loginAPI({ loginId, password });
     if (localStorage.getItem('accessToken')) {
       navigate('/main');

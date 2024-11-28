@@ -20,6 +20,7 @@ export const ProfileImage = styled.img`
 export const Nickname = styled.p`
   font-size: 18px;
   font-weight: 500;
+  color: ${({ theme, color }) => (color ? theme.colors[color] : 'black')};
 `;
 
 export const NameContainer = styled.div`
