@@ -20,10 +20,6 @@ export const TitleContainer = styled.div`
   padding: 30px;
 `;
 
-export const Logo = styled.img`
-  width: 200px;
-`;
-
 export const Title = styled.p`
   font-size: 24px;
   font-weight: 600;

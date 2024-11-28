@@ -9,6 +9,7 @@ export const Container = styled.div`
   align-items: center;
   height: 100vh;
   gap: 30px;
+  position: sticky;
 `;
 
 export const SidebarContainer = styled.div`
