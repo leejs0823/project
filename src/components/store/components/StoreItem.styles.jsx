@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   border: 1px solid ${({ theme }) => theme.colors.primary2};
-  padding: 15px 20px;
+  padding: 10px;
   border-radius: 10px;
 `;
 

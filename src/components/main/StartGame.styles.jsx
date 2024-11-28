@@ -13,6 +13,7 @@ export const Content = styled.div`
   justify-content: center;
   gap: 10px;
   height: 100%;
+  padding: 15px;
 `;
 
 export const Logo = styled.img`
@@ -34,4 +35,5 @@ export const CreateGameButton = styled.div`
   color: white;
   font-weight: 600;
   padding: 15px 30px;
+  cursor: pointer;
 `;

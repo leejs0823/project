@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './SignupPage.styles';
 import drawItLogo from '../../assets/images/DrawIt-logo.svg';
 import InputContainer from '../../components/common/input/InputContainer';
@@ -7,12 +7,26 @@ import emailIcon from '../../assets/images/mail-icon.svg';
 import DrawIt3DImage from '../../assets/images/DrawIt-3D-image.png';
 import SquareButton from '../../components/common/button/SquareButton';
 import { useNavigate } from 'react-router-dom';
+import { signUpAPI } from '../../api/user/user';
 
 function SignupPage() {
   const navigate = useNavigate();
-  const handleSignup = () => {
-    console.log('회원가입 로직');
-    navigate('/login');
+  const [nickname, setNickname] = useState();
+  const [loginId, setLoginId] = useState();
+  const [password, setPassword] = useState();
+  const handleSignup = async () => {
+    try {
+      // 회원가입 API 호출
+      const response = await signUpAPI({ loginId, password, nickname });
+
+      // 회원가입 성공 시 메시지 출력
+      console.log('회원가입 성공:', response);
+      // 로그인 페이지로 이동
+      navigate('/login');
+    } catch (error) {
+      console.error('회원가입 실패:', error.message);
+      alert(error.message); // 실패 시 사용자에게 알림
+    }
   };
   return (
     <S.Container>
@@ -38,10 +52,27 @@ function SignupPage() {
           <p>회원가입</p>
         </S.Title>
         <S.LoginInputContainer onSubmit={handleSignup}>
-          <InputContainer title="닉네임" type="text" icon={emailIcon} />
-          <InputContainer title="아이디" type="text" icon={lockIcon} />
-          <InputContainer title="비밀번호" type="password" icon={lockIcon} />
-          <InputContainer title="비밀번호 확인" type="password" icon={lockIcon} />
+          <InputContainer
+            title="닉네임"
+            type="text"
+            icon={emailIcon}
+            value={nickname}
+            onChange={e => setNickname(e.target.value)}
+          />
+          <InputContainer
+            title="아이디"
+            type="text"
+            icon={lockIcon}
+            value={loginId}
+            onChange={e => setLoginId(e.target.value)}
+          />
+          <InputContainer
+            title="비밀번호"
+            type="password"
+            icon={lockIcon}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
           <SquareButton title="회원가입" type="submit" />
         </S.LoginInputContainer>
       </S.RightContainer>

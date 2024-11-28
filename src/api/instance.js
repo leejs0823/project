@@ -12,7 +12,7 @@ const defaultInstance = axios.create({
 });
 
 // 인터셉터 적용
-applyInterceptors(defaultInstance);
+// applyInterceptors(defaultInstance);
 
 // 추가 API 인스턴스
 const createInstance = (baseInstance, path) => {
@@ -21,25 +21,9 @@ const createInstance = (baseInstance, path) => {
   return instance;
 };
 
-const companyInstance = createInstance(defaultInstance, '/companies');
-const memberInstance = createInstance(defaultInstance, '/members');
-const planInstance = createInstance(defaultInstance, '/plans');
-const planBannerInstance = createInstance(planInstance, '/banner');
-const planDetailInstance = createInstance(planInstance, '/detail');
-const planMainInstance = createInstance(planInstance, '/main');
-const planSearchInstance = createInstance(planInstance, '/search');
-const planThemeInstance = createInstance(planInstance, '/themes');
-const planRankingInstance = createInstance(planInstance, '/ranking');
+const userInstance = createInstance(defaultInstance, '/users');
+const friendInstance = createInstance(defaultInstance, '/users/friends');
+const itemInstance = createInstance(defaultInstance, '/items');
+const postInstance = createInstance(defaultInstance, '/posts');
 
-export {
-  defaultInstance,
-  companyInstance,
-  memberInstance,
-  planInstance,
-  planBannerInstance,
-  planMainInstance,
-  planSearchInstance,
-  planDetailInstance,
-  planThemeInstance,
-  planRankingInstance,
-};
+export { defaultInstance, userInstance, friendInstance, itemInstance, postInstance };

@@ -1,20 +1,15 @@
 import { sendRequest } from '../request';
-import { defaultInstance, memberInstance } from '../instance';
+import { userInstance } from '../instance';
 import axios from 'axios';
 
-const API_ENDPOINTS = {
-  LOGIN: '/login',
-  SIGN_UP: '/join',
-};
-
-export const login = async (username, password) => {
+export const loginAPI = async (loginId, password) => {
   try {
     const response = await sendRequest(
-      defaultInstance,
+      userInstance,
       'post',
-      API_ENDPOINTS.LOGIN,
+      '/login',
       {
-        username,
+        loginId,
         password,
       },
       {
@@ -29,7 +24,7 @@ export const login = async (username, password) => {
 
       return;
     }
-    localStorage.setItem('username', username);
+
     localStorage.setItem('accessToken', accessToken);
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
@@ -44,32 +39,30 @@ export const login = async (username, password) => {
 };
 
 // 회원가입 API
-export const signUp = async ({
-  name,
-  phoneNumber,
-  email,
-  username,
-  password,
-  nickname,
-  province,
-  city,
-}) => {
+export const signUpAPI = async ({ loginId, password, nickname }) => {
   try {
-    const requestBody = { name, phoneNumber, email, username, password, nickname, province, city };
-
-    const response = await sendRequest(memberInstance, 'post', API_ENDPOINTS.SIGN_UP, requestBody);
-
-    if (response.data.isSuccess) {
-      console.log('✅ 회원가입 성공:', response.data);
-      return response.data;
+    const requestBody = {
+      loginId: loginId,
+      password: password,
+      nickname: nickname,
+    };
+    console.log('회원가입 요청 데이터:', requestBody);
+    const response = await sendRequest(userInstance, 'post', '/register', requestBody);
+    // 디버깅 로그
+    if (response.status === 401) {
+      console.log('401');
+    } else if (response.status === 200) {
+      console.log('200');
     }
-
-    throw new Error(response.data.message || '회원가입에 실패했습니다.');
+    console.log('Response:', response);
+    console.log('Response Data:', response.data);
+    return response;
   } catch (error) {
     console.error('❌ 회원가입 실패:', error.response || error.message);
-    throw new Error(
-      error.response?.data?.message || error.message || '회원가입 중 문제가 발생했습니다.'
-    );
+    // 네트워크 에러인 경우 처리
+    if (!error.response) {
+      throw new Error('네트워크 에러: 서버에 연결할 수 없습니다.');
+    }
   }
 };
 

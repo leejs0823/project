@@ -8,16 +8,18 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
-  gap: 10px;
+  padding: 30px;
+  gap: 20px;
   background-color: ${({ theme }) => theme.colors.primary3};
+  height: 90%;
+  overflow: hidden;
 `;
 
 export const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 30px;
+  padding: 10px;
 `;
 
 export const Title = styled.p`
@@ -31,6 +33,7 @@ export const ContentContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 15px;
+  overflow-y: auto;
 `;
 
 export const RightArrowContainer = styled.div`

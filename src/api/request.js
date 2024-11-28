@@ -1,4 +1,4 @@
-export const sendRequest = async (instance, method, url, data, options = {}) => {
+export const sendRequest = async (instance, method, url, data = {}) => {
   try {
     // eslint-disable-next-line no-undef
     if (process.env.NODE_ENV === 'development') {
@@ -10,7 +10,6 @@ export const sendRequest = async (instance, method, url, data, options = {}) => 
       method,
       url,
       data,
-      ...options,
     });
 
     // eslint-disable-next-line no-undef
