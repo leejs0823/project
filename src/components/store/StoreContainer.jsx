@@ -3,54 +3,23 @@ import * as S from './StoreContainer.styles';
 import StoreItem from './components/StoreItem';
 import rightArrowIcon from '../../assets/images/right-arrow-icon.svg';
 import leftArrowIcon from '../../assets/images/left-arrow-icon.svg';
+import { fetchItemsAPI } from '../../api/item/item';
 
 function StoreContainer() {
   const [currentState, setCurrentState] = useState('all');
-  const [currendList, setCurrentList] = useState([]);
-  const itemList = [
-    {
-      color: 'orange',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-    {
-      color: 'yellow',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-    {
-      color: 'pink',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-    {
-      color: 'purple',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-    {
-      color: 'green',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-    {
-      color: 'red',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-    {
-      color: 'primary2',
-      description: '내 닉네임의 색깔을 빨간색으로 바꿀 수 있어요!',
-      name: '닉네임 색깔 바꾸기 아이템',
-      point: 100,
-    },
-  ];
+  const [currentList, setCurrentList] = useState([]);
+  useEffect(() => {
+    const fetchItemsAsync = async () => {
+      try {
+        const list = await fetchItemsAPI();
+        setCurrentList(list);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchItemsAsync();
+  }, []);
+
   const myItemList = [
     {
       color: 'orange',
@@ -74,16 +43,15 @@ function StoreContainer() {
   ];
 
   useEffect(() => {
-    setCurrentList(itemList);
     setCurrentState('all');
   }, []);
+
   const handleClick = () => {
     if (currentState === 'all') {
       setCurrentState('private');
       setCurrentList(myItemList);
     } else if (currentState === 'private') {
       setCurrentState('all');
-      setCurrentList(itemList);
     }
   };
 
@@ -106,9 +74,9 @@ function StoreContainer() {
       )}
       <S.ContentContainer>
         {currentState === 'all' &&
-          currendList.map((item, index) => (
+          currentList.map(item => (
             <StoreItem
-              key={index}
+              key={item.id}
               name={item.name}
               color={item.color}
               description={item.description}
@@ -118,7 +86,7 @@ function StoreContainer() {
             />
           ))}
         {currentState === 'private' &&
-          currendList.map((item, index) => (
+          currentList.map((item, index) => (
             <StoreItem
               key={index}
               name={item.name}

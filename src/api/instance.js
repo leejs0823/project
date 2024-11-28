@@ -24,6 +24,7 @@ const createInstance = (baseInstance, path) => {
 const userInstance = createInstance(defaultInstance, '/users');
 const friendInstance = createInstance(defaultInstance, '/users/friends');
 const itemInstance = createInstance(defaultInstance, '/items');
+applyInterceptors(itemInstance);
 const postInstance = createInstance(defaultInstance, '/posts');
 
 export { defaultInstance, userInstance, friendInstance, itemInstance, postInstance };

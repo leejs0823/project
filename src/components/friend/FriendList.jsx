@@ -11,7 +11,7 @@ import { fetchUserDetailAPI } from '../../api/user/user';
 function FriendList() {
   const [currentState, setCurrentState] = useState('home');
   const [currentTitle, setCurrentTitle] = useState('내 친구 목록');
-  const [currentList, setCurrentList] = useState();
+  const [currentList, setCurrentList] = useState([]);
   const [searchNickname, setSearchNickname] = useState();
 
   const handleMenuClick = async menu => {
