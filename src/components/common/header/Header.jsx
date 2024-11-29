@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as S from './Header.styles';
 import defaultProfile from '../../../assets/images/default-profile.svg';
 import { useRecoilValue } from 'recoil';
 import { myCurrentPointState, myTotalPointState } from '../../../recoil/user';
+import { useUserHook } from '../../../api/user/user';
 
 function Header() {
+  const { fetchUserDetailAPI } = useUserHook();
   const myCurrentPoint = useRecoilValue(myCurrentPointState);
   const myTotalPoint = useRecoilValue(myTotalPointState);
   const myNickname = localStorage.getItem('nickname');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchUserDetailAPI(myNickname);
+    };
+    fetchData();
+  }, [myNickname]);
+
   return (
     <S.Container>
       <S.Welcome>🖐️ 안녕하세요, {myNickname} 님!</S.Welcome>

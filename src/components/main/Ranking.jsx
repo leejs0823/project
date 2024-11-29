@@ -1,44 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './Ranking.styles';
 import RankingItem from './components/RankingItem';
+import { useRecoilValue } from 'recoil';
+import { myTotalPointState, myNicknameState, allUserRankingState } from '../../recoil/user';
+import { useUserHook } from '../../api/user/user';
 
 function Ranking() {
+  const { fetchUsersAPI } = useUserHook();
+  const myTotalPoint = useRecoilValue(myTotalPointState);
+  const myNickname = useRecoilValue(myNicknameState);
+  const allUserRanking = useRecoilValue(allUserRankingState);
   const [lankingState, setLankingState] = useState('all');
+
   const handleLankingClick = lankingSwitch => {
     setLankingState(lankingSwitch);
   };
-  const rankingList = [
-    {
-      rank: 1,
-      nickname: 'username',
-      point: 10000,
-    },
-    {
-      rank: 2,
-      nickname: 'username',
-      point: 8000,
-    },
-    {
-      rank: 3,
-      nickname: 'username',
-      point: 7000,
-    },
-    {
-      rank: 4,
-      nickname: 'username',
-      point: 6000,
-    },
-    {
-      rank: 5,
-      nickname: 'username',
-      point: 5000,
-    },
-  ];
-  const myProfile = {
-    rank: 17,
-    point: 1000,
-    nickname: 'username',
-  };
+
+  useEffect(() => {
+    const fetchRankingList = async () => {
+      try {
+        await fetchUsersAPI();
+      } catch (error) {
+        console.error('랭킹 리스트를 가져오는 중 에러 발생:', error);
+      }
+    };
+    fetchRankingList();
+  }, []);
+
   return (
     <S.Container>
       <S.Title>RANKING</S.Title>
@@ -62,19 +50,15 @@ function Ranking() {
         <p>POINT</p>
       </S.RankUserPoint>
       <S.ListContainer>
-        <RankingItem
-          nickname={myProfile.nickname}
-          rank={myProfile.rank}
-          point={myProfile.point}
-          isMyRanking={true}
-        />
-        {rankingList &&
-          rankingList.map(item => (
+        <RankingItem nickname={myNickname} rank="1" point={myTotalPoint} isMyRanking={true} />
+        {allUserRanking &&
+          allUserRanking.map((item, index) => (
             <RankingItem
-              key={item.rank}
+              key={index}
               nickname={item.nickname}
-              rank={item.rank}
-              point={item.point}
+              rank={index + 1}
+              point={item.totalPoint}
+              isMyRanking={item.nickname === myNickname ? true : false}
             />
           ))}
       </S.ListContainer>

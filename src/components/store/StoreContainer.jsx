@@ -3,14 +3,14 @@ import * as S from './StoreContainer.styles';
 import StoreItem from './components/StoreItem';
 import rightArrowIcon from '../../assets/images/right-arrow-icon.svg';
 import leftArrowIcon from '../../assets/images/left-arrow-icon.svg';
-import { useFetchItems } from '../../api/item/item';
+import { useItemHook } from '../../api/item/item';
 import { useRecoilValue } from 'recoil';
 import { myItemListState, itemListState } from '../../recoil/item';
 
 function StoreContainer() {
   const myItemList = useRecoilValue(myItemListState);
   const itemList = useRecoilValue(itemListState);
-  const { fetchItemsAPI, fetchMyItemsAPI } = useFetchItems();
+  const { fetchItemsAPI, fetchMyItemsAPI } = useItemHook();
   const [currentState, setCurrentState] = useState('all');
   const [currentList, setCurrentList] = useState([]);
 
@@ -23,7 +23,9 @@ function StoreContainer() {
       }
     };
     fetchItemsAsync();
-  }, [fetchItemsAPI, fetchMyItemsAPI]);
+    setCurrentState('all');
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (currentState === 'all') {
@@ -32,10 +34,6 @@ function StoreContainer() {
       setCurrentList(myItemList);
     }
   }, [currentState, itemList, myItemList]);
-
-  useEffect(() => {
-    setCurrentState('all');
-  }, []);
 
   const handleClick = () => {
     if (currentState === 'all') {
@@ -68,10 +66,11 @@ function StoreContainer() {
           currentList.map(item => (
             <StoreItem
               key={item.id}
+              itemId={item.id}
               name={item.name}
               color={item.color}
               description={item.description}
-              cost={item.point}
+              cost={item.cost}
               type="first"
               button="구매하기"
             />
@@ -81,9 +80,10 @@ function StoreContainer() {
             <StoreItem
               key={index}
               name={item.name}
+              itemId={item.id}
               color={item.color}
               description={item.description}
-              cost={item.point}
+              cost={item.cost}
               type="second"
               button="적용하기"
             />

@@ -1,7 +1,12 @@
 import { sendRequest } from '../request';
 import { userInstance } from '../instance';
 import { applyInterceptors } from '../interceptor';
-import { myCurrentPointState, myTotalPointState, myNicknameState } from '../../recoil/user';
+import {
+  myCurrentPointState,
+  myTotalPointState,
+  myNicknameState,
+  allUserListState,
+} from '../../recoil/user';
 import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
 
@@ -9,6 +14,7 @@ export const useUserHook = () => {
   const setMyCurrentPoint = useSetRecoilState(myCurrentPointState);
   const setMyTotalPoint = useSetRecoilState(myTotalPointState);
   const setNyNickname = useSetRecoilState(myNicknameState);
+  const setAllUserList = useSetRecoilState(allUserListState);
 
   const loginAPI = async ({ loginId, password }) => {
     try {
@@ -30,7 +36,7 @@ export const useUserHook = () => {
       console.log('✅ 로그인 성공');
       return response.data;
     } catch (error) {
-      console.error('❌ 로그ㅋ인 에러:', error.response || error.message);
+      console.error('❌ 로그인 에러:', error.response || error.message);
       throw new Error(
         error.response?.data?.message || error.message || '로그인 중 문제가 발생했습니다.'
       );
@@ -59,6 +65,7 @@ export const useUserHook = () => {
     try {
       applyInterceptors(userInstance);
       const response = await sendRequest(userInstance, 'get', ``);
+      setAllUserList(response.data);
       return response.data;
     } catch (error) {
       console.error('❌ 전체 유저 조회 실패:', error.response || error.message);
@@ -74,6 +81,7 @@ export const useUserHook = () => {
       applyInterceptors(userInstance);
       const response = await sendRequest(userInstance, 'get', `/${nickname}`);
       if (myNickname === nickname) {
+        setNyNickname(response.data.nickname);
         setMyCurrentPoint(response.data.currentPoint);
         setMyTotalPoint(response.data.totalPoint);
       }
@@ -109,27 +117,3 @@ export const useUserHook = () => {
     updateNicknameAPI,
   };
 };
-
-// 토큰 재발급 API
-// export const reissueToken = async () => {
-//   try {
-//     const response = await sendRequest(defaultInstance, 'post', API_ENDPOINTS.REISSUE, {});
-
-//     const newAccessToken = response.headers?.access;
-//     if (!newAccessToken) {
-//       throw new Error('토큰 재발급 실패: 서버에서 반환된 Access Token이 없습니다.');
-//     }
-
-//     // Local Storage 및 Axios 헤더 업데이트
-//     localStorage.setItem('accessToken', newAccessToken);
-//     axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-
-//     console.log('✅ 토큰 재발급 성공');
-//     return response.data;
-//   } catch (error) {
-//     console.error('❌ 토큰 재발급 실패:', error.response || error.message);
-//     throw new Error(
-//       error.response?.data?.message || error.message || '토큰 재발급 중 문제가 발생했습니다.'
-//     );
-//   }
-// };
