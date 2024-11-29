@@ -6,6 +6,7 @@ export const Container = styled.div`
   align-items: center;
   gap: 10px;
   border: 1px solid ${({ theme }) => theme.colors.primary2};
+  width: 230px;
   padding: 10px;
   border-radius: 10px;
 `;

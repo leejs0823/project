@@ -64,7 +64,7 @@ function Sidebar() {
         </S.ButtonContainer>
       </S.SidebarContainer>
       <S.BottomContainer>
-        <S.SettingLogoutButton>
+        <S.SettingLogoutButton onClick={() => handleMenuClick('setting')}>
           <S.Icon src={settingIcon} alt="setting" />
           <S.SettingText>설정</S.SettingText>
         </S.SettingLogoutButton>

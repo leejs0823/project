@@ -7,10 +7,11 @@ import emailIcon from '../../assets/images/mail-icon.svg';
 import DrawIt3DImage from '../../assets/images/DrawIt-3D-image.png';
 import SquareButton from '../../components/common/button/SquareButton';
 import { useNavigate } from 'react-router-dom';
-import { loginAPI } from '../../api/user/user';
+import { useUserHook } from '../../api/user/user';
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { loginAPI } = useUserHook();
   const [loginId, setLoginId] = useState();
   const [password, setPassword] = useState();
   const handleLogin = async e => {

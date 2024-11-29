@@ -11,11 +11,11 @@ export const Container = styled.div`
 `;
 
 export const Welcome = styled.p`
-  font-size: 20px;
+  font-size: 18px;
 `;
 
-export const CurrentPoint = styled.p`
-  font-size: 18px;
+export const Point = styled.p`
+  font-size: 16px;
   font-weight: 500;
 `;
 

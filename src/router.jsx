@@ -5,6 +5,7 @@ import SignupPage from './pages/signup/SignupPage';
 import StorePage from './pages/store/StorePage';
 import FriendPage from './pages/friend/FriendPage';
 import CommunityPage from './pages/community/CommunityPage';
+import SettingPage from './pages/setting/SettingPage';
 import App from './App';
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'community',
         element: <CommunityPage />,
+      },
+      {
+        path: 'setting',
+        element: <SettingPage />,
       },
     ],
   },

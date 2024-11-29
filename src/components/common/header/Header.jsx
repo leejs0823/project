@@ -1,15 +1,20 @@
 import React from 'react';
 import * as S from './Header.styles';
 import defaultProfile from '../../../assets/images/default-profile.svg';
+import { useRecoilValue } from 'recoil';
+import { myCurrentPointState, myTotalPointState } from '../../../recoil/user';
 
 function Header() {
-  const username = '이정선';
-  const currentPoint = 800;
+  const myCurrentPoint = useRecoilValue(myCurrentPointState);
+  const myTotalPoint = useRecoilValue(myTotalPointState);
+  const myNickname = localStorage.getItem('nickname');
   return (
     <S.Container>
-      <S.Welcome>🖐️ 안녕하세요, {username} 님!</S.Welcome>
+      <S.Welcome>🖐️ 안녕하세요, {myNickname} 님!</S.Welcome>
       <S.SideContainer>
-        <S.CurrentPoint>내 포인트 : {currentPoint} point</S.CurrentPoint>
+        <S.Point>사용 가능한 포인트 : {myCurrentPoint} point</S.Point>
+        <p>|</p>
+        <S.Point>랭킹 포인트 : {myTotalPoint} point</S.Point>
         <S.ProfileImage src={defaultProfile} alt="image" />
       </S.SideContainer>
     </S.Container>

@@ -12,8 +12,8 @@ export const Container = styled.div`
   padding: 20px 40px;
   gap: 10px;
   background-color: ${({ theme }) => theme.colors.primary3};
-  height: 100%;
-  overflow: scroll;
+  height: 90%;
+  overflow: auto;
 `;
 
 export const TitleContainer = styled.div`

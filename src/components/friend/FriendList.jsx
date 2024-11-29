@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as S from './FriendList.styles';
 import bellIcon from '../../assets/images/bell-icon.svg';
-import fillBellIcon from '../../assets/images/fill-bell-icon.svg';
+// import fillBellIcon from '../../assets/images/fill-bell-icon.svg';
 import searchIcon from '../../assets/images/search-icon.svg';
 import leftArrowIcon from '../../assets/images/left-arrow-icon.svg';
 import FriendProfile from './components/FriendProfile';
-import { fetchUsersAPI } from '../../api/user/user';
-import { fetchUserDetailAPI } from '../../api/user/user';
+import { useUserHook } from '../../api/user/user';
 
 function FriendList() {
+  const { fetchUserDetailAPI, fetchUsersAPI } = useUserHook();
   const [currentState, setCurrentState] = useState('home');
   const [currentTitle, setCurrentTitle] = useState('내 친구 목록');
   const [currentList, setCurrentList] = useState([]);
