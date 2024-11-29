@@ -12,6 +12,13 @@ export const Container = styled.div`
 
 export const Welcome = styled.p`
   font-size: 18px;
+  p {
+    color: ${({ theme, color }) => (color ? theme.colors[color] : 'black')};
+    font-size: 18px;
+  }
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 `;
 
 export const Point = styled.p`

@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import * as S from './Ranking.styles';
 import RankingItem from './components/RankingItem';
 import { useRecoilValue } from 'recoil';
-import { myTotalPointState, myNicknameState, allUserRankingState } from '../../recoil/user';
+import {
+  myTotalPointState,
+  myNicknameState,
+  allUserRankingState,
+  nicknameColorState,
+} from '../../recoil/user';
 import { useUserHook } from '../../api/user/user';
 
 function Ranking() {
@@ -10,6 +15,7 @@ function Ranking() {
   const myTotalPoint = useRecoilValue(myTotalPointState);
   const myNickname = useRecoilValue(myNicknameState);
   const allUserRanking = useRecoilValue(allUserRankingState);
+  const nicknameColor = useRecoilValue(nicknameColorState);
   const [lankingState, setLankingState] = useState('all');
 
   const handleLankingClick = lankingSwitch => {
@@ -50,7 +56,13 @@ function Ranking() {
         <p>POINT</p>
       </S.RankUserPoint>
       <S.ListContainer>
-        <RankingItem nickname={myNickname} rank="1" point={myTotalPoint} isMyRanking={true} />
+        <RankingItem
+          nickname={myNickname}
+          rank="1"
+          point={myTotalPoint}
+          isMyRanking={true}
+          color={nicknameColor}
+        />
         {allUserRanking &&
           allUserRanking.map((item, index) => (
             <RankingItem
@@ -59,6 +71,7 @@ function Ranking() {
               rank={index + 1}
               point={item.totalPoint}
               isMyRanking={item.nickname === myNickname ? true : false}
+              color={item.nicknameColor}
             />
           ))}
       </S.ListContainer>

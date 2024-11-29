@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import * as S from './Header.styles';
 import defaultProfile from '../../../assets/images/default-profile.svg';
 import { useRecoilValue } from 'recoil';
-import { myCurrentPointState, myTotalPointState } from '../../../recoil/user';
+import { myCurrentPointState, myTotalPointState, nicknameColorState } from '../../../recoil/user';
 import { useUserHook } from '../../../api/user/user';
 
 function Header() {
   const { fetchUserDetailAPI } = useUserHook();
   const myCurrentPoint = useRecoilValue(myCurrentPointState);
   const myTotalPoint = useRecoilValue(myTotalPointState);
+  const nicknameColor = useRecoilValue(nicknameColorState);
   const myNickname = localStorage.getItem('nickname');
 
   useEffect(() => {
@@ -20,7 +21,9 @@ function Header() {
 
   return (
     <S.Container>
-      <S.Welcome>🖐️ 안녕하세요, {myNickname} 님!</S.Welcome>
+      <S.Welcome color={nicknameColor}>
+        🖐️ 안녕하세요, <p>{myNickname}</p> 님!
+      </S.Welcome>
       <S.SideContainer>
         <S.Point>사용 가능한 포인트 : {myCurrentPoint} point</S.Point>
         <p>|</p>

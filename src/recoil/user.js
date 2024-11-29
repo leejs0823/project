@@ -20,6 +20,11 @@ export const allUserListState = atom({
   default: [],
 });
 
+export const nicknameColorState = atom({
+  key: 'nicknameColorState',
+  default: 'black',
+});
+
 export const allUserRankingState = selector({
   key: 'allUserRankingState',
   get: ({ get }) => {

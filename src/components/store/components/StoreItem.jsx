@@ -3,12 +3,19 @@ import * as S from './StoreItem.styles';
 import { useItemHook } from '../../../api/item/item';
 
 function StoreItem({ itemId, name, description, color, cost, button, type }) {
-  const { purchaseItemAPI } = useItemHook();
+  const { purchaseItemAPI, applyItemAPI } = useItemHook();
   const handleButtonClick = async e => {
     e.preventDefault(); // 새로고침 방지
     if (type === 'first') {
-      await purchaseItemAPI(itemId);
-      confirm('구매 완료');
+      const purchaseResponse = await purchaseItemAPI(itemId);
+      if (purchaseResponse) {
+        confirm('구매 완료');
+      } else confirm('돈이 없어요 ㅜㅜ');
+    } else if (type === 'second') {
+      const useResponse = await applyItemAPI(itemId);
+      if (useResponse) {
+        confirm('사용 완료');
+      } else confirm('사용할 수 없어요 ㅠㅠ');
     }
   };
   return (

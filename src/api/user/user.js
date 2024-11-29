@@ -6,6 +6,7 @@ import {
   myTotalPointState,
   myNicknameState,
   allUserListState,
+  nicknameColorState,
 } from '../../recoil/user';
 import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
@@ -15,6 +16,7 @@ export const useUserHook = () => {
   const setMyTotalPoint = useSetRecoilState(myTotalPointState);
   const setNyNickname = useSetRecoilState(myNicknameState);
   const setAllUserList = useSetRecoilState(allUserListState);
+  const setNicknameColor = useSetRecoilState(nicknameColorState);
 
   const loginAPI = async ({ loginId, password }) => {
     try {
@@ -84,6 +86,7 @@ export const useUserHook = () => {
         setNyNickname(response.data.nickname);
         setMyCurrentPoint(response.data.currentPoint);
         setMyTotalPoint(response.data.totalPoint);
+        setNicknameColor(response.data.nicknameColor);
       }
       return response.data;
     } catch (error) {

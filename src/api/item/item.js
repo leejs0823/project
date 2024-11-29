@@ -42,10 +42,18 @@ export const useItemHook = () => {
       setMyItemList(response.data);
       return response.data;
     } catch (error) {
-      console.error('❌ 아이템 조회 실패:', error.response || error.message);
-      if (!error.response) {
-        throw new Error('네트워크 에러: 서버에 연결할 수 없습니다.');
-      }
+      console.error('❌ 아이템 구매 실패:', error.response || error.message);
+      return false;
+    }
+  };
+
+  const applyItemAPI = async itemId => {
+    try {
+      const response = await sendRequest(itemInstance, 'post', `/use`, { itemId });
+      return response.status;
+    } catch (error) {
+      console.error('❌ 아이템 사용 실패:', error.response || error.message);
+      return false;
     }
   };
 
@@ -53,5 +61,6 @@ export const useItemHook = () => {
     fetchItemsAPI,
     fetchMyItemsAPI,
     purchaseItemAPI,
+    applyItemAPI,
   };
 };

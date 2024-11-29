@@ -39,6 +39,7 @@ export const UserContainer = styled.div`
 export const UserName = styled.p`
   font-size: 16px;
   font-weight: 500;
+  color: ${({ theme, color }) => (color ? theme.colors[color] : 'black')};
 `;
 export const Button = styled.div`
   background-color: ${({ theme }) => theme.colors.primary2};
