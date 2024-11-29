@@ -28,6 +28,7 @@ applyInterceptors(itemInstance);
 const purchaseInstance = createInstance(defaultInstance, '/purchase');
 applyInterceptors(purchaseInstance);
 const postInstance = createInstance(defaultInstance, '/posts');
+applyInterceptors(postInstance);
 
 export {
   defaultInstance,

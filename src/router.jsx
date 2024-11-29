@@ -6,6 +6,7 @@ import StorePage from './pages/store/StorePage';
 import FriendPage from './pages/friend/FriendPage';
 import CommunityPage from './pages/community/CommunityPage';
 import SettingPage from './pages/setting/SettingPage';
+import GamePage from './pages/game/GamePage';
 import App from './App';
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: 'setting',
         element: <SettingPage />,
+      },
+      {
+        path: 'game',
+        element: <GamePage />,
       },
     ],
   },

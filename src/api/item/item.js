@@ -11,7 +11,6 @@ export const useItemHook = () => {
     try {
       const response = await sendRequest(itemInstance, 'get', ``);
       setItemList(response.data);
-      console.log('@', response.data);
       return response.data;
     } catch (error) {
       console.error('❌ 전체 아이템 조회 실패:', error.response || error.message);
@@ -25,7 +24,6 @@ export const useItemHook = () => {
     try {
       const response = await sendRequest(itemInstance, 'get', `/myItems`);
       setMyItemList(response.data);
-      console.log('@', response.data);
       return response.data;
     } catch (error) {
       console.error('❌ 아이템 조회 실패:', error.response || error.message);
