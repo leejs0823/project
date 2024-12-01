@@ -34,3 +34,30 @@ export const Point = styled.p`
   font-size: 16px;
   font-weight: 500;
 `;
+
+export const Button = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.primary2};
+  color: white;
+`;
+
+export const DenialButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.gray5};
+  color: white;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+`;

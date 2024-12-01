@@ -17,6 +17,7 @@ function Ranking() {
   const allUserRanking = useRecoilValue(allUserRankingState);
   const nicknameColor = useRecoilValue(nicknameColorState);
   const [lankingState, setLankingState] = useState('all');
+  const [filteredRanking, setFilteredRanking] = useState([]);
 
   const handleLankingClick = lankingSwitch => {
     setLankingState(lankingSwitch);
@@ -32,6 +33,19 @@ function Ranking() {
     };
     fetchRankingList();
   }, []);
+
+  useEffect(() => {
+    if (lankingState === 'friend') {
+      // 친구 랭킹 필터링
+      setFilteredRanking(allUserRanking.filter(user => user.isFriend));
+    } else {
+      // 전체 랭킹
+      setFilteredRanking(allUserRanking);
+    }
+  }, [lankingState, allUserRanking]);
+
+  // 백엔드 수정 반영 예정
+  const myRank = filteredRanking.findIndex(user => user.nickname === myNickname) + 1;
 
   return (
     <S.Container>
@@ -58,18 +72,18 @@ function Ranking() {
       <S.ListContainer>
         <RankingItem
           nickname={myNickname}
-          rank="1"
+          rank={myRank}
           point={myTotalPoint}
           isMyRanking={true}
           color={nicknameColor}
         />
-        {allUserRanking &&
-          allUserRanking.map((item, index) => (
+        {filteredRanking &&
+          filteredRanking.map((item, index) => (
             <RankingItem
               key={index}
               nickname={item.nickname}
               rank={index + 1}
-              point={item.totalPoint}
+              point={item.totalPoints}
               isMyRanking={item.nickname === myNickname ? true : false}
               color={item.nicknameColor}
             />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './LoginPage.styles';
 import drawItLogo from '../../assets/images/DrawIt-logo.svg';
 import InputContainer from '../../components/common/input/InputContainer';
@@ -23,6 +23,7 @@ function LoginPage() {
       confirm('로그인 실패');
     }
   };
+
   return (
     <S.Container>
       <S.LeftSideContainer>

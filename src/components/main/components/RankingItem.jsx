@@ -10,7 +10,6 @@ function RankingItem({ rank, nickname, point, isMyRanking, color }) {
         <S.ProfileImage src={defaultImage} alt="image" />
         <S.NameAndButton>
           <S.UserName color={color}>{nickname}</S.UserName>
-          {!isMyRanking && <S.Button>친구 신청</S.Button>}
         </S.NameAndButton>
       </S.UserContainer>
       <S.Point>{point}</S.Point>

@@ -14,44 +14,71 @@ function GameReady({ setCurrentGameState }) {
     <S.Container>
       <S.Logo src={DrawItLogo} alt="logo" />
       <S.ReadyContainer>
-        <S.PlayerInviteContainer>
+        <S.PlayerContainer>
           <S.Title>2/4 플레이어</S.Title>
           <S.Content>총 4 명의 플레이어와 함께 게임할 수 있습니다!</S.Content>
-          <S.User>
-            <div>
-              <S.Image src={defaultImage} alt="image" />
-              <S.Nickname>username</S.Nickname>
-            </div>
-            <S.Tag>멤버</S.Tag>
-          </S.User>
-          <S.User>
-            <div>
-              <S.Image src={defaultImage} alt="image" />
-              <S.Nickname>username</S.Nickname>
-            </div>
-            <S.Tag>멤버</S.Tag>
-          </S.User>
-        </S.PlayerInviteContainer>
-        <S.PlayerInviteContainer>
+          <S.UserContainer>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>방장</S.Tag>
+            </S.User>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>멤버</S.Tag>
+            </S.User>
+            <S.User>친구를 초대하세요!</S.User>
+            <S.User>친구를 초대하세요!</S.User>
+          </S.UserContainer>
+        </S.PlayerContainer>
+        <S.InviteContainer>
           <S.Title>친구 초대하기</S.Title>
           <S.Content>현재 접속되어 있는 친구 목록입니다!</S.Content>
-          <S.User>
-            <div>
-              <S.Image src={defaultImage} alt="image" />
-              <S.Nickname>username</S.Nickname>
-            </div>
-            <S.Tag>초대</S.Tag>
-          </S.User>
-          <S.User>
-            <div>
-              <S.Image src={defaultImage} alt="image" />
-              <S.Nickname>username</S.Nickname>
-            </div>
-            <S.Tag>초대</S.Tag>
-          </S.User>
-        </S.PlayerInviteContainer>
+          <S.InviteUserContainer>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>초대</S.Tag>
+            </S.User>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>초대</S.Tag>
+            </S.User>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>초대</S.Tag>
+            </S.User>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>초대</S.Tag>
+            </S.User>
+            <S.User>
+              <div>
+                <S.Image src={defaultImage} alt="image" />
+                <S.Nickname>username</S.Nickname>
+              </div>
+              <S.Tag>초대</S.Tag>
+            </S.User>
+          </S.InviteUserContainer>
+        </S.InviteContainer>
       </S.ReadyContainer>
-      <button onClick={handleStartClick}>게임 시작하기</button>
+      <S.StartButton onClick={handleStartClick}>게임 시작하기</S.StartButton>
     </S.Container>
   );
 }

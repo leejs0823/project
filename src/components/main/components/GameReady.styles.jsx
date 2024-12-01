@@ -11,6 +11,7 @@ export const Container = styled.div`
   height: 100%;
   padding: 30px 40px;
   width: 100%;
+  position: relative;
 `;
 
 export const Logo = styled.img`
@@ -32,10 +33,11 @@ export const ReadyContainer = styled.div`
   width: 100%;
   flex-direction: row;
   gap: 20px;
-  align-items: flex-start;
+  align-items: stretch;
+  height: auto;
 `;
 
-export const PlayerInviteContainer = styled.div`
+export const InviteContainer = styled.div`
   border-radius: 15px;
   border: 1px solid ${({ theme }) => theme.colors.primary2};
   padding: 15px;
@@ -45,10 +47,44 @@ export const PlayerInviteContainer = styled.div`
   width: 100%;
   flex-direction: column;
   box-shadow: 0px 0px 8px 0px rgba(79, 70, 229, 0.3);
+  height: 85%;
+  overflow-y: auto;
+`;
+
+export const PlayerContainer = styled.div`
+  border-radius: 15px;
+  border: 1px solid ${({ theme }) => theme.colors.primary2};
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px 0px rgba(79, 70, 229, 0.3);
+  height: 85%;
+  overflow-y: hidden;
 `;
 
 export const Content = styled.p`
   font-size: 14px;
+`;
+
+export const UserContainer = styled.div`
+  display: grid;
+  width: 100%;
+  gap: 5px;
+  grid-template-columns: 1fr; /* 3 열 */
+  grid-template-rows: repeat(4, 1fr); /* 2 행 */
+`;
+
+export const InviteUserContainer = styled.div`
+  height: 100%;
+  display: grid;
+  width: 100%;
+  gap: 5px;
+  grid-template-columns: 1fr; /* 3 열 */
+  grid-template-rows: repeat(4, 1fr); /* 2 행 */
+  overflow-y: auto;
 `;
 
 export const User = styled.div`
@@ -57,7 +93,7 @@ export const User = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: 10px 15px;
   border: 1px solid ${({ theme }) => theme.colors.primary2};
   border-radius: 10px;
   div {
@@ -83,4 +119,20 @@ export const Tag = styled.div`
   font-size: 10px;
   white-space: nowrap;
   border-radius: 5px;
+`;
+
+export const StartButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.colors.primary2};
+  color: white;
+  font-weight: 600;
+  padding: 15px 30px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
 `;

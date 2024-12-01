@@ -11,7 +11,6 @@ function GamePage() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-
     const fixedWidth = 1280;
     const fixedHeight = 720;
     canvas.width = fixedWidth;
@@ -85,6 +84,27 @@ function GamePage() {
     }
   };
 
+  const exportCanvasData = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      // Data URL 출력 (Base64 인코딩된 이미지 데이터)
+      const dataURL = canvas.toDataURL('image/png');
+      const byteString = atob(dataURL.split(',')[1]);
+      const arrayBuffer = new ArrayBuffer(byteString.length);
+      const uint8Array = new Uint8Array(arrayBuffer);
+
+      for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+      }
+
+      const blob = new Blob([uint8Array], { type: 'image/png' });
+
+      console.log('Binary Data:', uint8Array); // 바이너리 데이터 출력
+    } else {
+      console.error('Canvas is not initialized');
+    }
+  };
+
   return (
     <S.Container>
       <S.GameContainer>
@@ -129,6 +149,7 @@ function GamePage() {
           <S.ButtonContainer>
             <S.ResetButton onClick={clearCanvas}>초기화</S.ResetButton>
             <S.CompleteButton>완료</S.CompleteButton>
+            <S.ExportButton onClick={exportCanvasData}>데이터 추출</S.ExportButton>
           </S.ButtonContainer>
         </S.SketchbookContainer>
       </S.GameContainer>

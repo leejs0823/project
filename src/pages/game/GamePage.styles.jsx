@@ -184,3 +184,16 @@ export const CompleteButton = styled.button`
   font-weight: 500;
   font-size: 16px;
 `;
+
+export const ExportButton = styled.button`
+  display: inline-flex;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.colors.primary2};
+  border: 1.5px solid ${({ theme }) => theme.colors.primary2};
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+`;
