@@ -18,7 +18,7 @@ function GameReady({ setCurrentGameState, sendMessage, gameRoomId }) {
     navigate('/game');
   };
   const handleInviteRoom = name => {
-    sendMessage(`'/ws/inviteRoom`, {
+    sendMessage(`/ws/inviteRoom`, {
       hostNickname: nickname,
       roomId: gameRoomId,
       receiverNickname: name,

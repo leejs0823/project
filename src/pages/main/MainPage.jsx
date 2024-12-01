@@ -42,10 +42,7 @@ function MainPage() {
             console.log(
               `Received invite to Room ID: ${payload.roomId} from Host: ${payload.hostNickname}`
             );
-            confirm(
-              `Received invite to Room ID: ${payload.roomId} from Host: ${payload.hostNickname}`
-            );
-            // 초대 수락 버튼 생성 등
+            handleConfirm(payload.hostNickname, nickname);
           });
 
           // 초대 수락 알림
@@ -97,6 +94,28 @@ function MainPage() {
       stompClient.send(destination, {}, JSON.stringify(payload));
     } else {
       console.error('WebSocket is not connected. Unable to send message.');
+    }
+  };
+
+  const handleConfirm = (hostNickname, nickname) => {
+    const isAccepted = confirm(
+      `${hostNickname}이 ${nickname}을 게임에 초대하였습니다. 함께하시겠습니까?`
+    );
+    if (isAccepted) {
+      // 초대 수락
+      sendMessage(`/ws/acceptInvite`, {
+        roomId: gameRoomId,
+        userNickname: nickname,
+      });
+      console.log(`${hostNickname}의 게임 초대를 수락하셨습니다.`);
+    } else {
+      // // 초대 거절
+      // sendMessage(`/ws/rejectInvite`, {
+      //   hostNickname,
+      //   receiverNickname: nickname,
+      //   status: 'REJECT',
+      // });
+      // console.log(`Rejected invite from ${hostNickname}`);
     }
   };
 
