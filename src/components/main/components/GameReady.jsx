@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as S from './GameReady.styles';
 import DrawItLogo from '../../../assets/images/DrawIt-logo.svg';
 import defaultImage from '../../../assets/images/default-profile.svg';
@@ -18,11 +17,9 @@ function GameReady({
   const { fetchUsersAPI } = useUserHook();
   const allUserList = useRecoilValue(allUserListState);
   const nickname = localStorage.getItem('nickname');
-  const navigate = useNavigate();
 
   const handleStartClick = () => {
     setCurrentGameState('start');
-    console.log('###', gameRoomId);
     sendMessage('/ws/startGame', { gameRoomId });
   };
   console.log(gameRoomId);
