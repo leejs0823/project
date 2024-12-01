@@ -32,6 +32,7 @@ function Ranking() {
       }
     };
     fetchRankingList();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

@@ -86,6 +86,7 @@ function FriendList() {
         });
       }
     };
+    // eslint-disable-next-line
   }, [nickname]);
 
   useEffect(() => {
@@ -102,6 +103,7 @@ function FriendList() {
     if (currentState === 'home') {
       fetchFriendList(); // 초기 화면에서 친구 목록 로드
     }
+    // eslint-disable-next-line
   }, []);
 
   const handleMenuClick = async menu => {
