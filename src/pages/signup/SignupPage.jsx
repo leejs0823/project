@@ -22,6 +22,7 @@ function SignupPage() {
       const response = await signUpAPI({ loginId, password, nickname });
       if (response === 200) {
         console.log('회원가입 성공:', response);
+        confirm('회원가입 성공! 로그인하여 DrawIt을 이용해보세요');
         navigate('/login');
       }
     } catch (error) {

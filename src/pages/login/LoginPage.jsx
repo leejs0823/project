@@ -18,6 +18,7 @@ function LoginPage() {
     e.preventDefault(); // 새로고침 방지
     await loginAPI({ loginId, password });
     if (localStorage.getItem('accessToken')) {
+      confirm('로그인 성공! 환영합니다');
       navigate('/main');
     } else {
       confirm('로그인 실패');
