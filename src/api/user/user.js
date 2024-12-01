@@ -112,11 +112,18 @@ export const useUserHook = () => {
     }
   };
 
+  const test = async () => {
+    applyInterceptors(userInstance);
+    const response = await sendRequest(userInstance, 'get', '/test');
+    return response.data;
+  };
+
   return {
     loginAPI,
     signUpAPI,
     fetchUsersAPI,
     fetchUserDetailAPI,
     updateNicknameAPI,
+    test,
   };
 };

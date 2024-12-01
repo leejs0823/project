@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './MainPage.styles';
 import Sidebar from '../../components/common/sidebar/Sidebar';
 import Header from '../../components/common/header/Header';
@@ -9,8 +10,11 @@ import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
 function MainPage() {
+  const navigate = useNavigate();
+  const [hostNickname, setHostNickname] = useState();
+  const [participantNicknameList, setParticipantNicknameList] = useState([]);
   const [currentGameState, setCurrentGameState] = useState('not-ready');
-  const [gameRoomId, setGameRoomId] = useState(null);
+  const [currentGameRoomId, setCurrentGameRoomId] = useState(null);
   const stompClientRef = useRef(null);
   const nickname = localStorage.getItem('nickname');
   const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
@@ -29,10 +33,8 @@ function MainPage() {
           client.subscribe(`/queue/roomHost/${nickname}`, message => {
             const payload = JSON.parse(message.body);
             console.log('Room created:', payload);
-            console.log(
-              `Room created with ID: ${payload.gameRoomId}, Participant ID: ${payload.participantId}`
-            );
-            setGameRoomId(payload.gameRoomId);
+            const roomId = payload.gameRoomId; // 변수를 통해 즉시 참조
+            setCurrentGameRoomId(roomId);
           });
 
           // 초대 알림
@@ -42,27 +44,31 @@ function MainPage() {
             console.log(
               `Received invite to Room ID: ${payload.roomId} from Host: ${payload.hostNickname}`
             );
-            handleConfirm(payload.hostNickname, nickname);
+            // 초대 알림에서 handleConfirm 호출 시 roomId 전달
+            setHostNickname(payload.hostNickname);
+            handleConfirm(payload.hostNickname, nickname, payload.roomId);
           });
 
           // 초대 수락 알림
           client.subscribe(`/queue/newParticipant/${nickname}`, message => {
             const payload = JSON.parse(message.body);
-            console.log('Participant joined:', payload);
+            console.log('@@@Participant joined:', payload);
             console.log(
               `Room ID: ${payload.roomId}, Host: ${payload.hostNickname}, Participants: ${payload.participantNicknameList.join(', ')}`
             );
+            setParticipantNicknameList(payload.participantNicknameList);
             // 참가자 목록을 UI에 업데이트
           });
 
           // 게임 시작 알림
-          client.subscribe(`/queue/gameStart/${nickname}`, message => {
+          client.subscribe(`/game/gameStart/${nickname}`, message => {
             const payload = JSON.parse(message.body);
-            console.log('Game started:', payload);
+            console.log('@@@Game started:', payload);
             console.log(
-              `Room ID: ${payload.roomId}, Round: ${payload.roundNumber}, Drawer: ${payload.drawerNickname}`
+              `Room ID: ${payload.roomId}, Round: ${payload.roundNumber}, Drawer: ${payload.drawerNickname} word: ${payload.correctWord}`
             );
             // 게임 UI 시작
+            navigate('/game');
           });
 
           // 테스트 호출
@@ -97,7 +103,7 @@ function MainPage() {
     }
   };
 
-  const handleConfirm = (hostNickname, nickname) => {
+  const handleConfirm = (hostNickname, nickname, gameRoomId) => {
     const isAccepted = confirm(
       `${hostNickname}이 ${nickname}을 게임에 초대하였습니다. 함께하시겠습니까?`
     );
@@ -108,6 +114,7 @@ function MainPage() {
         userNickname: nickname,
       });
       console.log(`${hostNickname}의 게임 초대를 수락하셨습니다.`);
+      setCurrentGameState('ready');
     } else {
       // // 초대 거절
       // sendMessage(`/ws/rejectInvite`, {
@@ -135,7 +142,9 @@ function MainPage() {
             <GameReady
               setCurrentGameState={setCurrentGameState}
               sendMessage={sendMessage}
-              gameRoomId={gameRoomId}
+              gameRoomId={currentGameRoomId}
+              hostNickname={hostNickname}
+              participantNicknameList={participantNicknameList}
             />
           )}
         </S.MainBody>

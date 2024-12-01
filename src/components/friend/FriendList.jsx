@@ -111,7 +111,8 @@ function FriendList() {
     if (menu === 'search') {
       setCurrentTitle('전체 유저 조회');
       const list = await fetchUsersAPI();
-      setCurrentList(list);
+      const filteredList = list.filter(user => user.nickname !== nickname); // 나 자신 제외
+      setCurrentList(filteredList);
     } else if (menu === 'alert') {
       setCurrentTitle('알림');
       sendMessage('/ws/getPendingRequests', { receiverNickname: nickname });

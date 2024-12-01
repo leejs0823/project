@@ -35,6 +35,7 @@ export const ReadyContainer = styled.div`
   gap: 20px;
   align-items: stretch;
   height: auto;
+  height: 100%;
 `;
 
 export const InviteContainer = styled.div`
@@ -119,6 +120,16 @@ export const Tag = styled.div`
   font-size: 10px;
   white-space: nowrap;
   border-radius: 5px;
+`;
+
+export const MemberTag = styled.div`
+  padding: 5px 10px;
+  background-color: white;
+  color: ${({ theme }) => theme.colors.primary2};
+  font-size: 10px;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.primary2};
 `;
 
 export const StartButton = styled.button`
