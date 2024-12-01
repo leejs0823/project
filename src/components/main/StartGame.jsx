@@ -2,9 +2,14 @@ import React from 'react';
 import * as S from './StartGame.styles';
 import DrawItLogo from '../../assets/images/DrawIt-logo.svg';
 
-function StartGame({ setCurrentGameState }) {
+function StartGame({ setCurrentGameState, sendMessage }) {
+  const nickname = localStorage.getItem('nickname');
   const handleStartGame = () => {
+    sendMessage(`/ws/makeRoom`, {
+      userNickname: nickname,
+    });
     setCurrentGameState('ready'); // 상태 변경
+
     console.log('start game');
   };
 
