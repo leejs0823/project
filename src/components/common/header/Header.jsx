@@ -17,6 +17,7 @@ function Header() {
       await fetchUserDetailAPI(myNickname);
     };
     fetchData();
+    // eslint-disable-next-line
   }, [myNickname]);
 
   return (

@@ -21,6 +21,7 @@ function GamePage() {
     context.lineWidth = lineWidth;
     context.lineCap = 'round';
     context.strokeStyle = color;
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -97,7 +98,7 @@ function GamePage() {
         uint8Array[i] = byteString.charCodeAt(i);
       }
 
-      const blob = new Blob([uint8Array], { type: 'image/png' });
+      // const blob = new Blob([uint8Array], { type: 'image/png' });
 
       console.log('Binary Data:', uint8Array); // 바이너리 데이터 출력
     } else {
