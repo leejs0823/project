@@ -7,7 +7,7 @@ import { useUserHook } from '../../../api/user/user';
 import { allUserListState } from '../../../recoil/user';
 import { useRecoilValue } from 'recoil';
 
-function GameReady({ setCurrentGameState, sendMessage }) {
+function GameReady({ setCurrentGameState, sendMessage, gameRoomId }) {
   // const [hostNickname, setHostNickname] = useState();
   const { fetchUsersAPI } = useUserHook();
   const allUserList = useRecoilValue(allUserListState);
@@ -20,7 +20,7 @@ function GameReady({ setCurrentGameState, sendMessage }) {
   const handleInviteRoom = name => {
     sendMessage(`'/ws/inviteRoom`, {
       hostNickname: nickname,
-      roomId: 1,
+      roomId: gameRoomId,
       receiverNickname: name,
     });
   };

@@ -10,6 +10,7 @@ import { Stomp } from '@stomp/stompjs';
 
 function MainPage() {
   const [currentGameState, setCurrentGameState] = useState('not-ready');
+  const [gameRoomId, setGameRoomId] = useState(null);
   const stompClientRef = useRef(null);
   const nickname = localStorage.getItem('nickname');
   const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
@@ -31,6 +32,7 @@ function MainPage() {
             console.log(
               `Room created with ID: ${payload.gameRoomId}, Participant ID: ${payload.participantId}`
             );
+            setGameRoomId(payload.gameRoomId);
           });
 
           // 초대 알림
@@ -38,6 +40,9 @@ function MainPage() {
             const payload = JSON.parse(message.body);
             console.log('Room invite @', payload);
             console.log(
+              `Received invite to Room ID: ${payload.roomId} from Host: ${payload.hostNickname}`
+            );
+            confirm(
               `Received invite to Room ID: ${payload.roomId} from Host: ${payload.hostNickname}`
             );
             // 초대 수락 버튼 생성 등
@@ -108,7 +113,11 @@ function MainPage() {
             </>
           )}
           {currentGameState === 'ready' && (
-            <GameReady setCurrentGameState={setCurrentGameState} sendMessage={sendMessage} />
+            <GameReady
+              setCurrentGameState={setCurrentGameState}
+              sendMessage={sendMessage}
+              gameRoomId={gameRoomId}
+            />
           )}
         </S.MainBody>
       </S.MainContainer>
