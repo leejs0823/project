@@ -29,7 +29,7 @@ function GamePage() {
   const nickname = localStorage.getItem('nickname');
   const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
   const [currentFileName, setCurrentFileName] = useState(null);
-  // const [downloadedImage, setDownloadedImage] = useState(null); // 다운로드된 이미지 상태 추가
+  const [downloadedImage, setDownloadedImage] = useState(null); // 다운로드된 이미지 상태 추가
 
   useEffect(() => {
     const connect = () => {
@@ -53,35 +53,13 @@ function GamePage() {
             console.log(data.roomId);
           });
 
-          // 이미지 수신
-          client.subscribe(`/game/getPicture/${nickname}`, message => {
-            const data = JSON.parse(message.body);
-            console.log('Image received:');
-            console.log(`Room ID: ${data.roomId}`);
-            console.log(`Image Data:`, data.image);
-            // 바이너리 데이터를 Blob으로 변환
-            const blob = new Blob([new Uint8Array(data.image)], { type: 'image/png' });
-            const url = URL.createObjectURL(blob);
-
-            const canvas = canvasRef.current;
-            const context = canvas.getContext('2d');
-            const img = new Image();
-            img.src = url;
-
-            img.onload = () => {
-              context.clearRect(0, 0, canvas.width, canvas.height); // 기존 캔버스 초기화
-              context.drawImage(img, 0, 0, canvas.width, canvas.height); // 새로운 이미지 그리기
-              URL.revokeObjectURL(url); // 메모리 누수 방지를 위해 URL 해제
-            };
-            console.log('Binary image received and rendered');
-          });
-
           // 단어 추측 결과
           client.subscribe(`/game/guessResult/${nickname}`, message => {
             const data = JSON.parse(message.body);
             console.log('Guess result:');
             console.log(`Guessed Word: ${data.guessedWord}`);
             console.log(`Similarity: ${data.similarity}`);
+
             // displayGuessResult(data);
           });
 
@@ -123,7 +101,12 @@ function GamePage() {
             console.log('Game ended:');
             console.log('Final Results:', data.roomId);
             console.log('Final Results:', data.imageURL);
+
+            const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
+            const url = `${BASE_URL}/downloadImage/${data.imageURL}`;
             setCurrentFileName(data.imageURL);
+            setDownloadedImage(url);
+            console.log(data.imageURL);
           });
         },
         function (error) {
@@ -165,6 +148,7 @@ function GamePage() {
         userNickname: nickname,
         roundId: roundNumber,
         guessedWord: guessWord || '', // 추측어 입력이 없으면 빈 문자열 전송
+        roomId: currentGameRoom,
       });
       console.log('Guess submitted:', guessWord);
     }
@@ -223,7 +207,7 @@ function GamePage() {
   };
 
   const startDrawing = e => {
-    if (nickname !== drawerNickname) return; // 권한 체크
+    if (nickname !== drawerNickname || timeLeft === 0) return; // 권한 체크
     const context = canvasRef.current.getContext('2d');
     const { x, y } = getMousePosition(e);
 
@@ -233,7 +217,7 @@ function GamePage() {
   };
 
   const draw = e => {
-    if (!isDrawing || nickname !== drawerNickname) return; // 권한 체크
+    if (!isDrawing || nickname !== drawerNickname || timeLeft === 0) return; // 권한 체크
 
     const context = canvasRef.current.getContext('2d');
     const { x, y } = getMousePosition(e);
@@ -243,7 +227,7 @@ function GamePage() {
   };
 
   const stopDrawing = () => {
-    if (nickname !== drawerNickname) return; // 권한 체크
+    if (nickname !== drawerNickname || timeLeft === 0) return; // 권한 체크
     setIsDrawing(false);
   };
 
@@ -252,7 +236,7 @@ function GamePage() {
   };
 
   const clearCanvas = () => {
-    if (nickname !== drawerNickname) return; // 권한 체크
+    if (nickname !== drawerNickname || timeLeft === 0) return; // 권한 체크
     if (contextRef.current && canvasRef.current) {
       contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     } else {
@@ -261,7 +245,7 @@ function GamePage() {
   };
 
   useEffect(() => {
-    let timeoutId;
+    let intervalId;
     const sendImagePeriodically = async () => {
       if (timeLeft > 0 && nickname === drawerNickname) {
         const canvas = canvasRef.current;
@@ -291,17 +275,19 @@ function GamePage() {
             console.log(response);
           }
         }, 'image/png');
-
-        // 다음 호출 예약
-        timeoutId = setTimeout(sendImagePeriodically, 3000);
       }
     };
     // 초기 호출
-    sendImagePeriodically();
+    // interval 설정
+    if (nickname === drawerNickname && timeLeft > 0) {
+      intervalId = setInterval(() => {
+        sendImagePeriodically();
+      }, 2000);
+    }
     // 컴포넌트 언마운트 시 타이머 정리
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+      if (intervalId) {
+        clearInterval(intervalId);
       }
     };
     // eslint-disable-next-line
@@ -310,25 +296,23 @@ function GamePage() {
   useEffect(() => {
     const downloadImage = async () => {
       if (nickname !== drawerNickname && currentFileName) {
-        try {
-          const response = await downloadImageAPI(currentFileName);
-          const blob = new Blob([response], { type: 'image/png' });
-          const url = URL.createObjectURL(blob);
+        console.log(currentFileName);
 
+        try {
+          const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
+          const url = `${BASE_URL}/downloadImage/${currentFileName}`;
           const img = new Image();
           img.src = url;
 
           img.onload = () => {
             console.log('Image loaded successfully');
             const canvas = canvasRef.current;
-            if (canvas) {
-              const context = canvas.getContext('2d');
-              canvas.width = img.width;
-              canvas.height = img.height;
-              context.clearRect(0, 0, canvas.width, canvas.height);
-              context.drawImage(img, 0, 0, img.width, img.height);
-              URL.revokeObjectURL(url);
-            }
+            const context = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(img, 0, 0, img.width, img.height);
+            window.URL.revokeObjectURL(url);
           };
 
           img.onerror = () => {
@@ -343,17 +327,6 @@ function GamePage() {
     downloadImage();
     // eslint-disable-next-line
   }, [drawerNickname, nickname, currentFileName]);
-
-  const exportCanvasData = () => {
-    if (nickname !== drawerNickname) return; // 권한 체크
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const dataURL = canvas.toDataURL('image/png');
-      console.log('Exported Data URL:', dataURL);
-    } else {
-      console.error('Canvas is not initialized');
-    }
-  };
 
   return (
     <S.Container>
@@ -405,17 +378,17 @@ function GamePage() {
 
             <S.Canvas
               ref={canvasRef}
-              onMouseDown={nickname === drawerNickname ? startDrawing : undefined}
-              onMouseMove={nickname === drawerNickname ? draw : undefined}
-              onMouseUp={nickname === drawerNickname ? stopDrawing : undefined}
-              onMouseLeave={nickname === drawerNickname ? stopDrawing : undefined}
+              onMouseDown={startDrawing}
+              onMouseMove={draw}
+              onMouseUp={stopDrawing}
+              onMouseLeave={stopDrawing}
             />
+            {/* {downloadedImage && <S.Img src={downloadedImage} alt="image" />} */}
           </S.Sketchbook>
           <S.ButtonContainer>
             {nickname === drawerNickname ? (
               <>
                 <S.ResetButton onClick={clearCanvas}>초기화</S.ResetButton>
-                <S.CompleteButton onClick={exportCanvasData}>완료</S.CompleteButton>
               </>
             ) : (
               <>
@@ -423,10 +396,9 @@ function GamePage() {
                   type="text"
                   placeholder="정답을 입력하세요"
                   value={guessWord}
-                  z
                   onChange={e => setGuessWord(e.target.value)}
                 />
-                <S.CompleteButton
+                {/* <S.CompleteButton
                   onClick={() =>
                     sendMessage(`/ws/guessWord`, {
                       userNickname: nickname,
@@ -436,7 +408,7 @@ function GamePage() {
                   }
                 >
                   작성 완료
-                </S.CompleteButton>
+                </S.CompleteButton> */}
               </>
             )}
           </S.ButtonContainer>

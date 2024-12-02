@@ -149,7 +149,7 @@ export const useUserHook = () => {
   const downloadImageAPI = async fileName => {
     const response = await axios.get(`${BASE_URL}/downloadImage/${fileName}`, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        responseType: 'blob',
       },
     });
     return response.data;

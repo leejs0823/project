@@ -124,6 +124,7 @@ export const Sketchbook = styled.div`
   align-items: center;
   box-shadow: 2px 4px 10px 0px #9e9e9e;
   border-radius: 5px;
+  position: relative;
 `;
 
 export const Word = styled.div`
@@ -223,6 +224,7 @@ export const Input = styled.input`
   background-color: white;
   border-radius: 10px;
   padding: 10px;
+  text-align: center;
 `;
 
 export const Timer = styled.p`
@@ -241,4 +243,10 @@ export const DownloadedImageContainer = styled.div`
   img {
     width: 100%;
   }
+`;
+
+export const Img = styled.img`
+  position: absolute;
+  width: 80%;
+  bottom: 0;
 `;
