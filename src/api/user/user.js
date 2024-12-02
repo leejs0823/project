@@ -1,5 +1,6 @@
 import { sendRequest } from '../request';
-import { userInstance } from '../instance';
+import axios from 'axios';
+import { userInstance, defaultInstance } from '../instance';
 import { applyInterceptors } from '../interceptor';
 import {
   myCurrentPointState,
@@ -9,7 +10,6 @@ import {
   nicknameColorState,
 } from '../../recoil/user';
 import { useSetRecoilState } from 'recoil';
-import axios from 'axios';
 
 export const useUserHook = () => {
   const setMyCurrentPoint = useSetRecoilState(myCurrentPointState);
@@ -118,6 +118,43 @@ export const useUserHook = () => {
     return response.data;
   };
 
+  // const sendImageAPI = async ({ gameRoomId, gameRoundId, multipartFile }) => {
+  //   applyInterceptors(defaultInstance);
+  //   console.log(gameRoomId);
+  //   console.log(gameRoundId);
+  //   console.log(multipartFile);
+  //   const response = await sendRequest(defaultInstance, 'post', '/sendImage', {
+  //     gameRoomId,
+  //     gameRoundId,
+  //     multipartFile,
+  //   });
+  //   return response.data;
+  // };
+
+  const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
+
+  const sendImageAPI = async ({ gameRoomId, gameRoundId, multipartFile, drawerNickname }) => {
+    const response = await axios.post(
+      `${BASE_URL}/sendImage`,
+      { gameRoomId, gameRoundId, multipartFile, drawerNickname }, // FormData 객체
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 헤더 자동 설정
+        },
+      }
+    );
+    return response.data;
+  };
+
+  const downloadImageAPI = async fileName => {
+    const response = await axios.get(`${BASE_URL}/downloadImage/${fileName}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  };
+
   return {
     loginAPI,
     signUpAPI,
@@ -125,5 +162,7 @@ export const useUserHook = () => {
     fetchUserDetailAPI,
     updateNicknameAPI,
     test,
+    sendImageAPI,
+    downloadImageAPI,
   };
 };

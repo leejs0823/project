@@ -183,6 +183,7 @@ export const CompleteButton = styled.button`
   color: white;
   font-weight: 500;
   font-size: 16px;
+  white-space: nowrap;
 `;
 
 export const ExportButton = styled.button`
@@ -196,4 +197,48 @@ export const ExportButton = styled.button`
   color: white;
   font-weight: 500;
   font-size: 16px;
+`;
+
+export const RoundNumberContent = styled.div`
+  position: absolute;
+  top: 30px;
+  left: 30px;
+`;
+
+export const RoundNumber = styled.p`
+  font-size: 20px;
+  font-weight: 800;
+  color: ${({ theme }) => theme.colors.primary1};
+`;
+
+export const Drawer = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.primary2};
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  font-size: 18px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+`;
+
+export const Timer = styled.p`
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  font-size: 24px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.primary2};
+  text-align: center;
+`;
+
+export const DownloadedImageContainer = styled.div`
+  width: 100%;
+  height: auto;
+  img {
+    width: 100%;
+  }
 `;

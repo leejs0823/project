@@ -8,13 +8,25 @@ import StartGame from '../../components/main/StartGame';
 import GameReady from '../../components/main/components/GameReady';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import {
+  correctWordDataState,
+  drawerNicknameState,
+  roundNumberState,
+  currentGameRoomState,
+} from '../../recoil/game';
+import { useSetRecoilState } from 'recoil';
 
 function MainPage() {
+  const setCorrectWordDataState = useSetRecoilState(correctWordDataState);
+  const setDrawerNicknameState = useSetRecoilState(drawerNicknameState);
+  const setRoundNumberState = useSetRecoilState(roundNumberState);
+  const setCurrentGameRoomState = useSetRecoilState(currentGameRoomState);
   const navigate = useNavigate();
   const [hostNickname, setHostNickname] = useState();
   const [participantNicknameList, setParticipantNicknameList] = useState([]);
   const [currentGameState, setCurrentGameState] = useState('not-ready');
   const [currentGameRoomId, setCurrentGameRoomId] = useState(null);
+
   const stompClientRef = useRef(null);
   const nickname = localStorage.getItem('nickname');
   const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
@@ -67,6 +79,11 @@ function MainPage() {
             console.log(
               `Room ID: ${payload.roomId}, Round: ${payload.roundNumber}, Drawer: ${payload.drawerNickname} word: ${payload.correctWord}`
             );
+            setCorrectWordDataState(payload.correctWord);
+            setDrawerNicknameState(payload.drawerNickname);
+            setRoundNumberState(payload.roundNumber);
+            setCurrentGameRoomState(payload.roomId);
+
             // 게임 UI 시작
             navigate('/game');
           });
