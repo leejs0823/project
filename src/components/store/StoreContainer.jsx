@@ -78,40 +78,26 @@ function StoreContainer() {
               button="구매하기"
             />
           ))}
-        {/* {currentState === 'private' &&
-          currentList.map((item, index) => (
-            <StoreItem
-              key={index}
-              name={item.name}
-              itemId={item.id}
-              color={item.color}
-              description={item.description}
-              cost={item.cost}
-              type="second"
-              button="적용하기"
-            />
-          ))} */}
-        <S.ContentContainer>
-          {currentState === 'private' &&
-            currentList.map((item, index) => {
-              const isApplied = item.color === nicknameColor || item.color === chattingColor;
-
-              return (
-                <StoreItem
-                  key={index}
-                  name={item.name}
-                  itemId={item.id}
-                  color={item.color}
-                  description={item.description}
-                  cost={item.cost}
-                  type="second"
-                  buttonColor={isApplied ? 'first' : 'second'}
-                  button={isApplied ? '적용중' : '적용하기'}
-                  isApplied={isApplied} // Optional: StoreItem 내부에서도 활용 가능
-                />
-              );
-            })}
-        </S.ContentContainer>
+      </S.ContentContainer>
+      <S.ContentContainer>
+        {currentState === 'private' &&
+          currentList.map((item, index) => {
+            const isApplied = item.color === nicknameColor || item.color === chattingColor;
+            return (
+              <StoreItem
+                key={index}
+                name={item.name}
+                itemId={item.id}
+                color={item.color}
+                description={item.description}
+                cost={item.cost}
+                type="second"
+                buttonColor={isApplied ? 'first' : 'second'}
+                button={isApplied ? '적용중' : '적용하기'}
+                isApplied={isApplied} // Optional: StoreItem 내부에서도 활용 가능
+              />
+            );
+          })}
       </S.ContentContainer>
     </S.Container>
   );
