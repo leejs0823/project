@@ -6,10 +6,13 @@ import leftArrowIcon from '../../assets/images/left-arrow-icon.svg';
 import { useItemHook } from '../../api/item/item';
 import { useRecoilValue } from 'recoil';
 import { myItemListState, itemListState } from '../../recoil/item';
+import { nicknameColorState, chattingColorState } from '../../recoil/user';
 
 function StoreContainer() {
   const myItemList = useRecoilValue(myItemListState);
   const itemList = useRecoilValue(itemListState);
+  const nicknameColor = useRecoilValue(nicknameColorState);
+  const chattingColor = useRecoilValue(chattingColorState);
   const { fetchItemsAPI, fetchMyItemsAPI } = useItemHook();
   const [currentState, setCurrentState] = useState('all');
   const [currentList, setCurrentList] = useState([]);
@@ -75,7 +78,7 @@ function StoreContainer() {
               button="구매하기"
             />
           ))}
-        {currentState === 'private' &&
+        {/* {currentState === 'private' &&
           currentList.map((item, index) => (
             <StoreItem
               key={index}
@@ -87,7 +90,28 @@ function StoreContainer() {
               type="second"
               button="적용하기"
             />
-          ))}
+          ))} */}
+        <S.ContentContainer>
+          {currentState === 'private' &&
+            currentList.map((item, index) => {
+              const isApplied = item.color === nicknameColor || item.color === chattingColor;
+
+              return (
+                <StoreItem
+                  key={index}
+                  name={item.name}
+                  itemId={item.id}
+                  color={item.color}
+                  description={item.description}
+                  cost={item.cost}
+                  type="second"
+                  buttonColor={isApplied ? 'first' : 'second'}
+                  button={isApplied ? '적용중' : '적용하기'}
+                  isApplied={isApplied} // Optional: StoreItem 내부에서도 활용 가능
+                />
+              );
+            })}
+        </S.ContentContainer>
       </S.ContentContainer>
     </S.Container>
   );

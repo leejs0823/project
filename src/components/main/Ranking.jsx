@@ -37,13 +37,20 @@ function Ranking() {
 
   useEffect(() => {
     if (lankingState === 'friend') {
-      // 친구 랭킹 필터링
-      setFilteredRanking(allUserRanking.filter(user => user.isFriend));
+      const myProfile = {
+        nickname: myNickname,
+        nicknameColor: nicknameColor,
+        totalPoints: myTotalPoint,
+      };
+      const sortedRanking = [myProfile, ...allUserRanking.filter(user => user.isFriend)].sort(
+        (a, b) => b.totalPoints - a.totalPoints
+      );
+      setFilteredRanking(sortedRanking); // 상태에 복사본을 저장
     } else {
-      // 전체 랭킹
-      setFilteredRanking(allUserRanking);
+      const sortedRanking = [...allUserRanking].sort((a, b) => b.totalPoints - a.totalPoints);
+      setFilteredRanking(sortedRanking); // 상태에 복사본을 저장
     }
-  }, [lankingState, allUserRanking]);
+  }, [lankingState, allUserRanking, myNickname, nicknameColor, myTotalPoint]);
 
   // 백엔드 수정 반영 예정
   const myRank = filteredRanking.findIndex(user => user.nickname === myNickname) + 1;

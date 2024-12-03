@@ -155,6 +155,19 @@ export const useUserHook = () => {
     return response.data;
   };
 
+  const endRoundAPI = async ({ gameRoomId, gameRoundId, multipartFile, drawerNickname }) => {
+    const response = await axios.post(
+      `${BASE_URL}/endRound`,
+      { gameRoomId, gameRoundId, multipartFile, drawerNickname }, // FormData 객체
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 헤더 자동 설정
+        },
+      }
+    );
+    return response.data;
+  };
+
   return {
     loginAPI,
     signUpAPI,
@@ -164,5 +177,6 @@ export const useUserHook = () => {
     test,
     sendImageAPI,
     downloadImageAPI,
+    endRoundAPI,
   };
 };

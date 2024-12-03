@@ -122,7 +122,7 @@ export const Sketchbook = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 2px 4px 10px 0px #9e9e9e;
+  box-shadow: 2px 4px 10px 0px ${({ theme }) => theme.colors.gray3};
   border-radius: 5px;
   position: relative;
 `;
@@ -249,4 +249,76 @@ export const Img = styled.img`
   position: absolute;
   width: 80%;
   bottom: 0;
+`;
+
+export const Similarity = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+`;
+
+export const Popup = styled.div`
+  z-index: 1000;
+  position: absolute;
+  padding: 30px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 0 ${({ theme }) => theme.colors.gray6};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40%;
+  gap: 15px;
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    padding: 5px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: ${({ theme }) => theme.colors.primary3};
+    padding: 15px;
+    border-radius: 10px;
+  }
+  span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+  }
+`;
+
+export const DrawerName = styled.p`
+  color: ${({ theme, color }) => (color ? theme.colors[color] : 'black')};
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const ParticipantName = styled.p`
+  color: ${({ theme, color }) => (color ? theme.colors[color] : 'black')};
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const Button = styled.button`
+  background-color: ${({ theme }) => theme.colors.primary2};
+  padding: 10px 15px;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
 `;

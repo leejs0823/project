@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import * as S from './Sidebar.styles';
 import DrawItLogo from '../../../assets/images/DrawIt-logo.svg';
-import communityIcon from '../../../assets/images/community-icon.svg';
 import storeIcon from '../../../assets/images/store-icon.svg';
 import friendIcon from '../../../assets/images/friend-icon.svg';
 import homeIcon from '../../../assets/images/home-icon.svg';
@@ -40,13 +39,6 @@ function Sidebar() {
         >
           <S.Icon src={homeIcon} alt="main" />
           <S.MenuText>홈</S.MenuText>
-        </S.ButtonContainer>
-        <S.ButtonContainer
-          isActive={currentMenu === 'community' ? true : false}
-          onClick={() => handleMenuClick('community')}
-        >
-          <S.Icon src={communityIcon} alt="community" />
-          <S.MenuText>게시판</S.MenuText>
         </S.ButtonContainer>
         <S.ButtonContainer
           isActive={currentMenu === 'friend' ? true : false}

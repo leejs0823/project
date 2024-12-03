@@ -19,3 +19,8 @@ export const currentGameRoomState = atom({
   key: 'currentGameRoomState',
   default: null,
 });
+
+export const currentGameRoundIdState = atom({
+  key: 'currentGameRoundIdState',
+  default: null,
+});

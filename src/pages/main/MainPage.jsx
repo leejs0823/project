@@ -13,6 +13,7 @@ import {
   drawerNicknameState,
   roundNumberState,
   currentGameRoomState,
+  currentGameRoundIdState,
 } from '../../recoil/game';
 import { useSetRecoilState } from 'recoil';
 
@@ -21,6 +22,7 @@ function MainPage() {
   const setDrawerNicknameState = useSetRecoilState(drawerNicknameState);
   const setRoundNumberState = useSetRecoilState(roundNumberState);
   const setCurrentGameRoomState = useSetRecoilState(currentGameRoomState);
+  const setCurrentGameRoundIdState = useSetRecoilState(currentGameRoundIdState);
   const navigate = useNavigate();
   const [hostNickname, setHostNickname] = useState();
   const [participantNicknameList, setParticipantNicknameList] = useState([]);
@@ -75,7 +77,7 @@ function MainPage() {
           // 게임 시작 알림
           client.subscribe(`/game/gameStart/${nickname}`, message => {
             const payload = JSON.parse(message.body);
-            console.log('@@@Game started:', payload);
+
             console.log(
               `Room ID: ${payload.roomId}, Round: ${payload.roundNumber}, Drawer: ${payload.drawerNickname} word: ${payload.correctWord}`
             );
@@ -83,7 +85,7 @@ function MainPage() {
             setDrawerNicknameState(payload.drawerNickname);
             setRoundNumberState(payload.roundNumber);
             setCurrentGameRoomState(payload.roomId);
-
+            setCurrentGameRoundIdState(payload.roundId);
             // 게임 UI 시작
             navigate('/game');
           });

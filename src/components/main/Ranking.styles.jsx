@@ -43,6 +43,8 @@ export const ListContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  height: 65%;
+  overflow-y: auto;
 `;
 
 export const Title = styled.p`

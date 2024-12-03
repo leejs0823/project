@@ -18,7 +18,7 @@ function Header() {
     };
     fetchData();
     // eslint-disable-next-line
-  }, [myNickname]);
+  }, [myNickname, nicknameColor]);
 
   return (
     <S.Container>

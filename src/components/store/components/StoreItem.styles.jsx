@@ -39,9 +39,9 @@ export const Point = styled.p`
 `;
 
 export const PurchaseButton = styled.button`
-  background-color: ${({ type, theme }) => (type === 'first' ? theme.colors.primary2 : 'white')};
-  color: ${({ type, theme }) => (type === 'first' ? 'white' : theme.colors.primary2)};
-  border: 1px solid ${({ type, theme }) => (type === 'first' ? 'white' : theme.colors.primary2)};
+  background-color: ${({ color, theme }) => (color === 'first' ? theme.colors.primary2 : 'white')};
+  color: ${({ color, theme }) => (color === 'first' ? 'white' : theme.colors.primary2)};
+  border: 1px solid ${({ color, theme }) => (color === 'first' ? 'white' : theme.colors.primary2)};
   padding: 5px 10px;
   border-radius: 10px;
 `;

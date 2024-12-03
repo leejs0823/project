@@ -25,6 +25,11 @@ export const nicknameColorState = atom({
   default: 'black',
 });
 
+export const chattingColorState = atom({
+  key: 'chattingColorState',
+  default: 'black',
+});
+
 export const allUserRankingState = selector({
   key: 'allUserRankingState',
   get: ({ get }) => {

@@ -2,7 +2,17 @@ import React from 'react';
 import * as S from './StoreItem.styles';
 import { useItemHook } from '../../../api/item/item';
 
-function StoreItem({ itemId, name, description, color, cost, button, type }) {
+function StoreItem({
+  itemId,
+  name,
+  description,
+  color,
+  cost,
+  button,
+  type,
+  isApplied,
+  buttonColor,
+}) {
   const { purchaseItemAPI, applyItemAPI } = useItemHook();
   const handleButtonClick = async e => {
     e.preventDefault(); // 새로고침 방지
@@ -26,7 +36,12 @@ function StoreItem({ itemId, name, description, color, cost, button, type }) {
         <S.Description>{description}</S.Description>
         <S.Point>포인트 : {cost} point</S.Point>
       </S.Item>
-      <S.PurchaseButton type={type} onClick={handleButtonClick}>
+      <S.PurchaseButton
+        disabled={isApplied}
+        type={type}
+        color={buttonColor}
+        onClick={handleButtonClick}
+      >
         {button}
       </S.PurchaseButton>
     </S.Container>

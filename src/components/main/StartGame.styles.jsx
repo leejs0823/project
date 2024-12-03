@@ -27,6 +27,7 @@ export const Title = styled.p`
 
 export const Mention = styled.p`
   font-size: 16px;
+  text-align: center;
 `;
 
 export const CreateGameButton = styled.div`
