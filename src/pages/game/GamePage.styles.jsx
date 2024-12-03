@@ -292,7 +292,7 @@ export const Popup = styled.div`
     align-items: center;
     gap: 10px;
     background-color: ${({ theme }) => theme.colors.primary3};
-    padding: 15px;
+    padding: 15px 30px;
     border-radius: 10px;
   }
   span {

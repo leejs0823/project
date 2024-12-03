@@ -33,6 +33,7 @@ function GamePage() {
   const contextRef = useRef(null); // 캔버스 context 저장
   const stompClientRef = useRef(null);
   const [, setCurrentSendFile] = useState();
+  ㄹ;
   const nickname = localStorage.getItem('nickname');
   const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
   const [currentFileName, setCurrentFileName] = useState(null);
@@ -75,12 +76,9 @@ function GamePage() {
             }
 
             // 기존 유사도와 비교하여 더 큰 유사도를 가진 단어를 저장
-            setBestGuess(prev => {
-              const newSimilarity = Math.floor(data.similarity * 100);
-              if (newSimilarity > prev.similarity) {
-                return { similarity: newSimilarity, guessedWord: data.guessedWord };
-              }
-              return prev;
+            setBestGuess({
+              similarity: Math.floor(data.similarity * 100),
+              guessedWord: data.guessedWord,
             });
           });
 
@@ -459,7 +457,7 @@ function GamePage() {
                 `제시어: ${correctWordData}`
               ) : bestGuess ? (
                 <S.Similarity>
-                  {bestGuess.guessedWord} | 유사도 : {bestGuess.similarity}
+                  {bestGuess.guessedWord} | 유사도 : {bestGuess.similarity}%
                 </S.Similarity>
               ) : (
                 '그림을 맞혀보세요!'
@@ -530,6 +528,7 @@ function GamePage() {
                 ))}
               </ul>
             </div>
+
             <S.Button onClick={() => navigate('/main')}>메인으로</S.Button>
           </S.Popup>
         ))}
