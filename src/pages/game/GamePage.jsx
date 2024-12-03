@@ -33,7 +33,7 @@ function GamePage() {
   const contextRef = useRef(null); // 캔버스 context 저장
   const stompClientRef = useRef(null);
   const [, setCurrentSendFile] = useState();
-  ㄹ;
+
   const nickname = localStorage.getItem('nickname');
   const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_URL;
   const [currentFileName, setCurrentFileName] = useState(null);
