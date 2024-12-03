@@ -1,6 +1,6 @@
 import { sendRequest } from '../request';
 import axios from 'axios';
-import { userInstance, defaultInstance } from '../instance';
+import { userInstance } from '../instance';
 import { applyInterceptors } from '../interceptor';
 import {
   myCurrentPointState,
